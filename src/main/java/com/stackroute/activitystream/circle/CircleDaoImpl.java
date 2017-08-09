@@ -72,7 +72,7 @@ public class CircleDaoImpl implements CircleDAO {
 		query.setParameter("circleId",circleId);
 		 
 		int result = query.executeUpdate();
-		 
+		 //git
 		if (result > 0) {
 		    System.out.println("Circle Removed successfully");
 		return true;
