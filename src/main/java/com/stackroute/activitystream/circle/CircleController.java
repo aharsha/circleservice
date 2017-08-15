@@ -28,7 +28,7 @@ public class CircleController {
 		@PostMapping("/addCircle")
 		public ResponseEntity<Circle> addNewCircle(@RequestBody Circle circle)
 		{
-			System.out.println("control at add  user ");
+			
 			try
 			{
 			boolean circleStatus=circleDao.addCircle(circle);
@@ -56,12 +56,37 @@ public class CircleController {
 			}
 			}
 		
+		@PostMapping("/addUser/{userid}/{circleid}")
+		public ResponseEntity<String> addNewCircle(@PathVariable("userid") String userid,@PathVariable("circleid") Integer circleid)
+		{
+			
+			try
+			{
+			boolean userStatus=circleDao.addUser(userid, circleid);
+			if(userStatus==true)
+			{
+			return new ResponseEntity<String>("user added successfully",HttpStatus.OK);
+			}
+			else
+			{
+				return new ResponseEntity<String>("user added successfully",HttpStatus.NOT_MODIFIED);
+			}
+			}
+			catch(Exception exception )
+			{
+				return new ResponseEntity<String>("user added successfully",HttpStatus.NOT_MODIFIED);
+					
+			}
+			}
+		
+		
+		
 		
 		@GetMapping("/getAllCircles")
 		public ResponseEntity<List<Circle>> retrieveAllCircles()
 		{
 			List<Circle> allCircles=null;
-			System.out.println("control at add  user ");
+			System.out.println("control at getAllCircles  user ");
 			try
 			{
 			 allCircles=circleDao.getAllCircles();
@@ -84,12 +109,13 @@ public class CircleController {
 			
 			}
 	
-		
+
 		@GetMapping("/getCircle/{circleid}")
-		public ResponseEntity<Circle> retrieveOneCircle(int circleid)
+		public ResponseEntity<Circle> retrieveOneCircle(@PathVariable("circleid") Integer circleid)
 		{
+			System.out.println("at circle controller in get Circle"+circleid);
 			Circle circle=null;
-			System.out.println("control at add  user ");
+			
 			try
 			{
 			 circle=circleDao.getCircle(circleid);
@@ -99,46 +125,77 @@ public class CircleController {
 			}
 			else
 			{
-				return new ResponseEntity<Circle>(circle,HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<Circle>(circle,HttpStatus.NO_CONTENT);
 			}
 			}
 			catch(Exception exception )
 			{
 				exception.printStackTrace();
 				
-				return new ResponseEntity<Circle>(circle,HttpStatus.CONFLICT);
+				return new ResponseEntity<Circle>(circle,HttpStatus.NO_CONTENT);
 					
 			}
 			
 			}
 	
 		
-		@GetMapping("/getAllCircles/{circleName}")
-		public ResponseEntity<List<Circle>> retrieveMyCircles(@PathVariable String circleName)
+		@GetMapping("/getMyCircles/{userId}")
+		public ResponseEntity<List<Circle>> retrieveMyCircles(@PathVariable String userId)
 		{
-			List<Circle> allCircles=null;
-			System.out.println("control at add  user ");
+		System.out.println(userId);
+			List<Circle> myCircles=null;
 			try
 			{
-			 allCircles=circleDao.myCircle(circleName);
-			if(allCircles!=null)
+			 myCircles=circleDao.myCircle(userId);
+			if(myCircles!=null)
 			{
-			return new ResponseEntity<List<Circle>>(allCircles,HttpStatus.OK);
+			return new ResponseEntity<List<Circle>>(myCircles,HttpStatus.OK);
 			}
 			else
 			{
-				return new ResponseEntity<List<Circle>>(allCircles,HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<List<Circle>>(myCircles,HttpStatus.BAD_REQUEST);
 			}
 			}
 			catch(Exception exception )
 			{
 				exception.printStackTrace();
 				
-				return new ResponseEntity<List<Circle>>(allCircles,HttpStatus.CONFLICT);
+				return new ResponseEntity<List<Circle>>(myCircles,HttpStatus.CONFLICT);
 					
 			}
 			
 			}
 
 
+		@GetMapping("/deleteUser/{userId}/{circleId}")
+		public ResponseEntity<String> deleteUserFromCircle(@PathVariable String userId,@PathVariable Integer circleId)
+		{
+		System.out.println(userId+circleId);
+		
+			boolean deleterUserStatus;
+			try
+			{
+			 deleterUserStatus=circleDao.removeUser(userId, circleId);
+			if(deleterUserStatus==true)
+			{
+			return new ResponseEntity<String>("deleted successfully",HttpStatus.OK);
+			}
+			else
+			{
+				return new ResponseEntity<String>("not deleted",HttpStatus.NOT_FOUND);
+					}
+			}
+			catch(Exception exception )
+			{
+				exception.printStackTrace();
+				
+				return new ResponseEntity<String>("not deleted",HttpStatus.NOT_MODIFIED);
+					
+			}
+			
+			}
+
+
+		
+		
 }

@@ -37,7 +37,7 @@ public class CircleServiceApplicationTests {
 		
 		
 		circle.setOwnerid("harsha@gmail.com");
-		circle.setStatus("active");
+		
 		assertEquals("success",true,circleDao.addCircle(circle));
 	}
 	

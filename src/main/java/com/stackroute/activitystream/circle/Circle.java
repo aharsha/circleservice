@@ -14,7 +14,7 @@ public class Circle {
 	@Id
 	private int circleid;
 	
-private String circlename,ownerid,circlediscription,status;
+private String circlename,ownerid,circlediscription;
 
 
 
@@ -79,17 +79,6 @@ private String circlename,ownerid,circlediscription,status;
 
 
 
-
-	public String getStatus() {
-		return status;
-	}
-
-
-
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
 
 
 

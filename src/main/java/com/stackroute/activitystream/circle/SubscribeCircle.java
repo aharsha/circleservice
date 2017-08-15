@@ -1,6 +1,8 @@
 package com.stackroute.activitystream.circle;
 
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -21,6 +23,18 @@ public class SubscribeCircle {
 	
 
 	private int circleid;
+	
+	private Date dataofjoin;
+
+
+	public Date getDataofjoin() {
+		return dataofjoin;
+	}
+
+
+	public void setDataofjoin(Date dataofjoin) {
+		this.dataofjoin = dataofjoin;
+	}
 
 
 	public int getSubscriberid() {

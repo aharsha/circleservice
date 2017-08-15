@@ -40,6 +40,7 @@ public class CircleDaoImpl implements CircleDAO {
 		subscribeCircle.setSubscriberid((int)(Math.random()*100000));
 		subscribeCircle.setCircleid(circleId);
 		subscribeCircle.setUserid(userId);
+		subscribeCircle.setDataofjoin(new Date());
 		
 		try {
 			sessionFacory.getCurrentSession().save(subscribeCircle);
@@ -55,9 +56,25 @@ public class CircleDaoImpl implements CircleDAO {
 	}
 
 	@Override
-	public boolean removeUser(String userID, String circleID) {
+	public boolean removeUser(String userId, int circleId) {
+		Query query = sessionFacory.getCurrentSession().createQuery("delete SubscribeCircle where userid=:userId and circleid=:circleId");
 		
-		return false;
+		query.setParameter("userId",userId);
+		query.setParameter("circleId",circleId);
+		
+		
+		 
+		int result = query.executeUpdate();
+		 
+		if (result > 0) {
+		   
+		return true;
+		}
+		else
+		{
+			
+			return false;	
+		}
 	}
 
 	@Override
@@ -72,14 +89,14 @@ public class CircleDaoImpl implements CircleDAO {
 		query.setParameter("circleId",circleId);
 		 
 		int result = query.executeUpdate();
-		 //git
+		 
 		if (result > 0) {
-		    System.out.println("Circle Removed successfully");
+		   
 		return true;
 		}
 		else
 		{
-			System.out.println("Circle Can not be removed");
+			
 			return false;	
 		}
 		
@@ -89,7 +106,6 @@ public class CircleDaoImpl implements CircleDAO {
 	public List<Circle> myCircle(String userId)
 	{
 		
-		//Query query = session.createQuery("from GoodsDealer gd where gd.numOfGoodsOrder = (select max(gd.numOfGoodsOrder) from gd )");
 		
 		return sessionFacory.getCurrentSession().createQuery("from Circle where circleid in(select circleid from SubscribeCircle where userid=:userId)").setParameter("userId",userId).list();
 		//return 	(List<Circle>)sessionFacory.getCurrentSession().createNativeQuery("select * from circle where circleId in( select circleId from activity.subscribecircle where userId=:userId)",Circle.class).setParameter("userId",userId).list();
@@ -98,10 +114,8 @@ public class CircleDaoImpl implements CircleDAO {
 	@Override
 	public Circle getCircle(int circleid)
 	{
-		
-		//Query query = session.createQuery("from GoodsDealer gd where gd.numOfGoodsOrder = (select max(gd.numOfGoodsOrder) from gd )");
-		
-		return (Circle)sessionFacory.getCurrentSession().createQuery("from Circle where circleid =:circleid)").setParameter("circleId",circleid).uniqueResult();
+	
+		return (Circle)sessionFacory.getCurrentSession().createQuery("from Circle where circleid =:circleid)").setParameter("circleid",circleid).uniqueResult();
 		//return 	(List<Circle>)sessionFacory.getCurrentSession().createNativeQuery("select * from circle where circleId in( select circleId from activity.subscribecircle where userId=:userId)",Circle.class).setParameter("userId",userId).list();
 	}
 	

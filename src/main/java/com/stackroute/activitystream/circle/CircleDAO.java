@@ -11,7 +11,7 @@ public boolean deleteCircle(int circleId);
 	
 	public boolean addUser(String userEmail, int circleId);
 	
-	public boolean removeUser(String userEmail, String circleId);
+	public boolean removeUser(String userEmail, int circleId);
 	
 	
 	public List<Circle> myCircle(String userId);
