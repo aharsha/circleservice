@@ -57,7 +57,7 @@ public class CircleController {
 			}
 		
 		@PostMapping("/addUser/{userid}/{circleid}")
-		public ResponseEntity<String> addNewCircle(@PathVariable("userid") String userid,@PathVariable("circleid") Integer circleid)
+		public ResponseEntity<String> addUserToCircle(@PathVariable("userid") String userid,@PathVariable("circleid") Integer circleid)
 		{
 			
 			try
