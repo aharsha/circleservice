@@ -6,11 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
 @Component
 @Entity
 @Table(name="circle")
-public class Circle {
+public class Circle extends ResourceSupport
+{
 	@Id
 	private int circleid;
 	

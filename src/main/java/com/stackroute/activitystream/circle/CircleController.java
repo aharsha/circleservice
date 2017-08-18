@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+import org.springframework.hateoas.Link;
+
+
 
 @RestController
 public class CircleController {
@@ -56,30 +60,6 @@ public class CircleController {
 			}
 			}
 		
-		@PostMapping("/addUser/{userid}/{circleid}")
-		public ResponseEntity<String> addUserToCircle(@PathVariable("userid") String userid,@PathVariable("circleid") Integer circleid)
-		{
-			
-			try
-			{
-			boolean userStatus=circleDao.addUser(userid, circleid);
-			if(userStatus==true)
-			{
-			return new ResponseEntity<String>("user added successfully",HttpStatus.OK);
-			}
-			else
-			{
-				return new ResponseEntity<String>("user added successfully",HttpStatus.NOT_MODIFIED);
-			}
-			}
-			catch(Exception exception )
-			{
-				return new ResponseEntity<String>("user added successfully",HttpStatus.NOT_MODIFIED);
-					
-			}
-			}
-		
-		
 		
 		
 		@GetMapping("/getAllCircles")
@@ -90,20 +70,30 @@ public class CircleController {
 			try
 			{
 			 allCircles=circleDao.getAllCircles();
+			 
+			 
+			
+			
 			if(allCircles!=null)
 			{
+				 for(Circle circle:allCircles)
+					{
+						Link link=linkTo(CircleController.class).slash(circle.getOwnerid()).withSelfRel();
+						circle.add(link);
+					}
+					
 			return new ResponseEntity<List<Circle>>(allCircles,HttpStatus.OK);
 			}
 			else
 			{
-				return new ResponseEntity<List<Circle>>(allCircles,HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<List<Circle>>(allCircles,HttpStatus.NO_CONTENT);
 			}
 			}
 			catch(Exception exception )
 			{
 				exception.printStackTrace();
 				
-				return new ResponseEntity<List<Circle>>(allCircles,HttpStatus.CONFLICT);
+				return new ResponseEntity<List<Circle>>(allCircles,HttpStatus.NO_CONTENT);
 					
 			}
 			
@@ -139,63 +129,7 @@ public class CircleController {
 			}
 	
 		
-		@GetMapping("/getMyCircles/{userId}")
-		public ResponseEntity<List<Circle>> retrieveMyCircles(@PathVariable String userId)
-		{
-		System.out.println(userId);
-			List<Circle> myCircles=null;
-			try
-			{
-			 myCircles=circleDao.myCircle(userId);
-			if(myCircles!=null)
-			{
-			return new ResponseEntity<List<Circle>>(myCircles,HttpStatus.OK);
-			}
-			else
-			{
-				return new ResponseEntity<List<Circle>>(myCircles,HttpStatus.BAD_REQUEST);
-			}
-			}
-			catch(Exception exception )
-			{
-				exception.printStackTrace();
-				
-				return new ResponseEntity<List<Circle>>(myCircles,HttpStatus.CONFLICT);
-					
-			}
-			
-			}
-
-
-		@GetMapping("/deleteUser/{userId}/{circleId}")
-		public ResponseEntity<String> deleteUserFromCircle(@PathVariable String userId,@PathVariable Integer circleId)
-		{
-		System.out.println(userId+circleId);
 		
-			boolean deleterUserStatus;
-			try
-			{
-			 deleterUserStatus=circleDao.removeUser(userId, circleId);
-			if(deleterUserStatus==true)
-			{
-			return new ResponseEntity<String>("deleted successfully",HttpStatus.OK);
-			}
-			else
-			{
-				return new ResponseEntity<String>("not deleted",HttpStatus.NOT_FOUND);
-					}
-			}
-			catch(Exception exception )
-			{
-				exception.printStackTrace();
 				
-				return new ResponseEntity<String>("not deleted",HttpStatus.NOT_MODIFIED);
-					
-			}
-			
-			}
-
-
-		
 		
 }
