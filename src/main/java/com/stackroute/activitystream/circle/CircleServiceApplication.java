@@ -7,8 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 @EntityScan(basePackages={"com.stackroute.activitystream.circle"})
-
+@ComponentScan("com.stackroute.activitystream")
 @SpringBootApplication
 public class CircleServiceApplication {
 
@@ -18,13 +19,13 @@ public class CircleServiceApplication {
 		SpringApplication.run(CircleServiceApplication.class, args);
 	}
 	
-	@Bean
-	public SessionFactory getSessionFactory(HibernateEntityManagerFactory hibernateEntityManagerFactory)
-	{
-		System.out.println("in getSession");
-		SessionFactory sessionFactory=hibernateEntityManagerFactory.getSessionFactory();
-		System.out.println("======"+sessionFactory);
-		
-return sessionFactory;
-	}
+//	@Bean
+//	public SessionFactory getSessionFactory(HibernateEntityManagerFactory hibernateEntityManagerFactory)
+//	{
+//		System.out.println("in getSession");
+//		SessionFactory sessionFactory=hibernateEntityManagerFactory.getSessionFactory();
+//		System.out.println("======"+sessionFactory);
+//		
+//return sessionFactory;
+//	}
 }

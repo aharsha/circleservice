@@ -13,9 +13,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.stackroute.activitystream.circle.Circle;
+
 import com.stackroute.activitystream.circle.CircleController;
-import com.stackroute.activitystream.circle.CircleDAO;
+import com.stackroute.activitystream.dao.CircleDAO;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = CircleController.class, secure = false)
